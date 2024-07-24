@@ -16,6 +16,11 @@ function OtpForm() {
     e.preventDefault();
     let result = "";
 
+    //blurs all inputs when form is submitted
+    inputGroup?.current.map((input) => {
+      input.blur();
+    })
+
     for (const key in numbers) {
       result += numbers[key];
     }
@@ -63,15 +68,15 @@ function OtpForm() {
 
                   setNumbers((prev) => {
                     let inputValue = e.target.value;
-
+                    // in case a value is present in input remove all previous digits and takes latest digit as input
                     if (numbers[obj.id]) {
                       inputValue = e.target.value.at(-1);
                     }
-
                     return { ...prev, [obj.id]: inputValue };
                   });
-
+                  // when a value is added in input, it transfers the focus to next input element
                   if (e.target.value) inputGroup.current[obj.id + 1]?.focus();
+                  // when an value is removed from input, it transfers the focus to previous input element
                   else inputGroup.current[obj.id - 1]?.focus();
                 }}
                 className={`h-full bg-[#DBE2EF] rounded-[0.75rem] w-[5.625rem] outline-[#112D4E] border-2 text-[3rem] text-center
