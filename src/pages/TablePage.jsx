@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Header, Input, Button } from "../components";
+import { Header, Input, Button, Table } from "../components";
 
 export default function TablePage() {
   const [query, setQuery] = useState("");
@@ -21,15 +21,16 @@ export default function TablePage() {
           <Input
             value={query}
             placeholder="Search by Title (alt+k or cmd+k)"
-            className="placeholder:text-[1rem] placeholder:text-[#C8C7C7] px-[1rem] py-[.75rem] w-[20.75rem] border-2 border-[#BEBEBE] outline-none rounded-[4px] text-[1.25rem]"
+            className="max-w-[332px] placeholder:text-[1rem] placeholder:text-[#C8C7C7] px-[1.5rem] py-[.5rem] w-[20.75rem] border-2 border-[#BEBEBE] outline-none rounded-[4px] text-[1.25rem]"
             onChange={(e) => setQuery(e.target.value)}
           />
           <Button
             value="Search"
-            className="bg-[#6C6BAF] text-[1.125rem] text-white font-semibold px-[2rem] rounded-[4px]"
+            className="bg-[#6C6BAF] text-[1.125rem] text-white px-[2rem] rounded-[4px]"
             onClick={clickHandler}
           />
         </div>
+        <Table />
       </div>
     </div>
   );

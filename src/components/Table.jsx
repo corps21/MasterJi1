@@ -7,6 +7,9 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
+import Card from "./Card";
+import Badge from "./Badge";
+
 function Table() {
 
   const [data, _setData] = useState(result);
@@ -15,6 +18,10 @@ function Table() {
   const columns = [
     accessor("title", {
       header: "Title",
+      cell: info => <div className="flex items-center space-x-4 w-[24rem]">
+        <Card src={info.row.original.imgUrl}/>
+        <p>{info.getValue()}</p>
+      </div>
     }),
     accessor("start_date", {
       header: "Start Date",
@@ -24,12 +31,14 @@ function Table() {
     }),
     accessor("price", {
       header: "Price",
+      cell: info => <p>&#8377; {info.getValue()}</p>
     }),
     accessor("validity", {
       header: "Validity/Expiry",
     }),
     accessor("isPublished", {
       header: "Status",
+      cell: info => info.getValue() ? <Badge value="Published" className="bg-[#DEFFDE] border-[#4ED04B]"/> : <Badge />
     }),
   ];
 
@@ -41,13 +50,13 @@ function Table() {
 
   console.log(table.getHeaderGroups())
   return (
-    <table>
+    <table className="w-[70rem] rounded-[.5rem] mt-[2rem]">
       <thead>
         {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
-                    <th key={header.id}>
-                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header,header.getContext())}
+                    <th key={header.id} className="py-[1.5rem] text-[#4B4747] text-left px-[1rem] font-bold ">
+                        {header.column.columnDef.header}
                     </th>
                 ))}
             </tr>
@@ -57,7 +66,7 @@ function Table() {
         {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
                 {row.getVisibleCells().map(cell => (
-                    <td key={cell.id}>
+                    <td key={cell.id} className="px-[1rem] py-[1.5rem] text-[#4B4747] font-semibold">
                         {flexRender(cell.column.columnDef.cell,cell.getContext())}
                     </td>
                 ))}
